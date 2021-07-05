@@ -1,0 +1,59 @@
+####
+# Example of what CKEditor can all bring
+###
+
+# Load default processing options
+imports:
+    - { resource: "EXT:rte_ckeditor/Configuration/RTE/Processing.yaml" }
+    - { resource: "EXT:rte_ckeditor/Configuration/RTE/Editor/Base.yaml" }
+    - { resource: "EXT:rte_ckeditor/Configuration/RTE/Editor/Plugins.yaml" }
+
+# Add configuration for the editor
+# For complete documentation see http://docs.ckeditor.com/#!/api/CKEDITOR.config
+editor:
+  config:
+    # Include custom CSS
+
+    stylesSet:
+    - { name: 'Founders Grotesk Center', element: 'p', attributes: { 'class': 'copytext' }, styles: { text-align: 'center'} }
+    - { name: 'Self Modern Creme', element: 'p', attributes: { 'class': 'listtext-creme' } }
+    - { name: 'Self Modern Ashy Blue', element: 'p', attributes: { 'class': 'listtext-ashyblue' } }
+      # block level styles
+
+      # Inline styles
+      
+
+    format_tags: "p;h1;h2"
+
+    toolbarGroups:
+    - { name: styles, groups: [ styles ] }
+    - { name: colors, groups: [ colors ] }
+    - { name: basicstyles, groups: [ basicstyles ] }
+    - { name: clipboard, groups: [ undo ] }
+    - "/"
+    - { name: paragraph, groups: [ align, list, indent, paragraph ] },
+    - { name: editing, groups: [ editing ] },
+    - { name: links, groups: [ link ] },
+    - { name: insert, groups: [ insert ] },
+    - { name: tools, groups: [ tools ] },
+
+    justifyClasses:
+      - text-left
+      - text-center
+      - text-right
+      - text-justify
+
+    extraPlugins:
+      - justify
+      - autolink
+      - colorbutton
+
+    removeButtons:
+      - Anchor
+      - Underline
+      - Strike
+      - Cut,Copy,Paste,PasteText,PasteFromWord,Subscript,Superscript,BGColor,Image,Table
+
+    colorButton_enableAutomatic: false
+    colorButton_enableMore: false
+    colorButton_colors: weiß/FFF,schwarz/000,ashyblue/717684,creme/F5F8F2

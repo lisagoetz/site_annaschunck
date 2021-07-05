@@ -1,0 +1,32 @@
+<html data-namespace-typo3-fluid="true" xmlns:f="https://xsd.helhum.io/ns/typo3/cms-fluid/master/ViewHelpers">
+    <header>
+        <a id="logo" href="/"><img src="fileadmin/logos/logo_annaschunck_creme_untereinander.svg" alt="Logo"></a>
+        <p class="italic">Journalistin</p>
+        <nav id="menubody" class="overlay">
+            <button id="closebtn" onclick="closeNav()">Menü schließen</button>
+            <f:render partial="Menue/Header"/>
+        </nav>
+        <button id="openbtn" onclick="openNav()">Menü</button>
+    </header>
+
+    <main id="portfolio">
+        <!-- Hauptinhalt -> rendern übers Template -->
+        <div class="portfolio-col1">
+            <f:render section="Column1"/>
+        </div>
+        <div class="portfolio-col2">
+            <f:render section="Column2"/>
+        </div>
+        <div class="portfolio-col3">
+            <f:render section="Column3"/>
+        </div>
+        <div class="panorama">
+            <f:render section="Panorama"/>
+        </div>
+    </main>
+
+    <footer>
+        <!-- Inhalt im Fußbereich, z.B. Doormat-Navigation -->
+        <f:render partial="Menue/Footer"/>
+    </footer>
+</html>
