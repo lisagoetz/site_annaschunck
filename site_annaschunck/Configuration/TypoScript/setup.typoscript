@@ -1,0 +1,155 @@
+# Extension-Konfiguration
+plugin.tx_siteannaschunck {
+    view {
+        templateRootPaths.0 = EXT:site_annaschunck/Resources/Private/Templates/
+        templateRootPaths.1 = {$plugin.tx_siteannaschunck.view.templateRootPath}
+
+        partialRootPaths.0 = EXT:site_annaschunck/Resources/Private/Partials/
+        partialRootPaths.1 = {$plugin.tx_siteannaschunck.view.partialRootPath}
+
+        layoutRootPaths.0 = EXT:site_annaschunck/Resources/Private/Layouts/
+        layoutRootPaths.1 = {$plugin.tx_siteannaschunck.view.layoutRootPath}
+    }
+}
+
+# Definition eines PAGE-Objekts — es begründet das grundlegende Rendering der Website
+page = PAGE
+page {
+    10 = FLUIDTEMPLATE
+    10 {
+        layoutRootPaths {
+            10 = EXT:site_annaschunck/Resources/Private/Layouts
+        }
+
+        partialRootPaths {
+            10 = EXT:site_annaschunck/Resources/Private/Partials
+        }
+
+        templateRootPaths {
+            10 = EXT:site_annaschunck/Resources/Private/Templates/Page
+        }
+
+        # Der Name des zu verwendenden Fluid-Templates wird aus den Seiteneinstellungen ermittelt
+        templateName.stdWrap.cObject = CASE
+        templateName.stdWrap.cObject {
+            key.data = pagelayout
+
+            # Alle anderen Backend-Layouts: Rendering mit dem Fluid-Template "Default"
+            default = TEXT
+            default.value = Default
+
+            # Backend-Layout mit der ID 1: Rendering mit dem Fluid-Template "Default"
+            1 = TEXT
+            1.value = Default
+
+            # Backend-Layout mit der ID 2: Rendering mit dem Fluid-Template "Portfolio"
+            2 = TEXT
+            2.value = Portfolio
+
+            # Backend-Layout mit der ID 3: Rendering mit dem Fluid-Template "Presse"
+            3 = TEXT
+            3.value = Presse
+        }
+    }
+
+    # Einbinden eines einzelnen CSS
+    includeCSS {
+        style = EXT:site_annaschunck/Resources/Public/Css/master.css
+    }
+
+    #Einbinden eines einzelnen JS
+    includeJSFooter {
+        file = EXT:site_annaschunck/Resources/Public/JavaScript/master.js
+    }
+
+    # Viewport
+    meta.viewport = width=device-width, initial-scale=1.0, shrink-to-fit=no
+
+    # Favicon
+    shortcutIcon = EXT:site_annaschunck/Resources/Public/Icons/favicon.ico
+
+}
+
+
+# TypoScript-Objekt zum Rendern von Inhaltselementen (wird aus Fluid aufgerufen)
+lib.content = CONTENT
+lib.content {
+    table = tt_content
+    select {
+        orderBy = sorting
+        where.cObject = COA
+        where.cObject {
+            10 = TEXT
+            10 {
+                field = colPos
+                intval = 1
+                ifEmpty = 0
+                noTrimWrap = | AND colPos=||
+            }
+        }
+    }
+}
+
+lib.contentElement {
+    templateRootPaths.20 = EXT:site_annaschunck/Resources/Private/Templates
+    partialRootPaths.20 = EXT:site_annaschunck/Resources/Private/Partials
+    layoutRootPaths.20 = EXT:site_annaschunck/Resources/Private/Layouts
+}
+
+
+
+# Hauptmenü
+lib.headermenu = HMENU
+lib.headermenu {
+    wrap = <ul id="menu">|</div>
+    # Die erste Ebene des Menüs soll durch Texteinträge dargestellt werden (TMENU)
+    1 = TMENU
+    1.expAll = 1
+
+    # Nutzen und konfigurieren des Normalzustands (NO)
+    1.NO = 1
+    1.NO.allWrap = <li class="row">|</li>
+
+    # Nutzen und konfigurieren des aktiven Zustands (ACT)
+    #1.ACT = 1
+    #1.ACT.wrapItemAndSub = <li class="active">|</li>
+}
+
+#Footermenü
+lib.footermenu = COA
+lib.footermenu {
+    wrap = <div class="footerbody">|</div>
+    10 = COA
+    10 {
+        wrap = <ul class="row">|</ul>
+
+        10 = HMENU
+        10 {
+            special = directory
+            special.value = 18
+
+            1 = TMENU
+            
+            1.NO = 1
+            1.NO.allWrap = <li>|</li>
+
+            #1.wrap = <ul>|</ul>
+        
+        }
+    }
+
+    20 < .10
+    20.wrap = <ul class="row">|</ul>
+    20.10.special.value = 19
+    20.10.1.NO.allWrap = <li class="und">|</li>|*|<li>|</li>
+
+    30 < .10
+    30.wrap = <ul class="row">|</ul>
+    30.10.special.value = 20
+    30.10.1.NO.allWrap = <li class="und">|</li>|*|<li>|</li>
+
+    40 = TEXT
+    40 {
+        wrap = <div class="row"><h1>Copyright 2021 AnnaSchunck.</h1></div>
+    }
+}
